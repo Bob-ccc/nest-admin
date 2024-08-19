@@ -31,7 +31,6 @@ export class UploadService {
       throw new NotFoundException('Have not any file to upload!')
 
     const fileName = file.filename
-    const size = getSize(file.file.bytesRead)
     const extName = getExtname(fileName)
     const type = getFileType(extName)
     const name = fileRename(fileName)
@@ -40,6 +39,7 @@ export class UploadService {
 
     saveLocalFile(await file.toBuffer(), name, currentDate, type)
 
+    const size = getSize(file.file.bytesRead)
     await this.storageRepository.save({
       name,
       fileName,
